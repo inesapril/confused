@@ -1,0 +1,307 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ==========================================================================
+   MODERN INDUSTRIAL MINIMALIST DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+    /* Color Palette - Concrete, Steel, Carbon & Amber */
+    --color-background: #f8fafc;     /* Light Concrete / Slate 50 */
+    --color-foreground: #0f172a;     /* Raw Carbon / Slate 900 */
+    --color-primary: #0f172a;        /* Carbon Steel */
+    --color-secondary: #475569;      /* Slate Steel / Slate 600 */
+    --color-success: #0f766e;        /* Deep Teal / Teal 700 */
+    --color-warning: #d97706;        /* Warning Amber / Amber 600 */
+    --color-danger: #be123c;         /* Iron Red / Rose 700 */
+    --color-info: #0284c7;           /* Blueprint Blue / Sky 700 */
+    
+    /* Layout Variables */
+    --border-color: #cbd5e1;         /* Refined Steel Border / Slate 300 */
+    --border-color-light: #e2e8f0;   /* Light Gridline / Slate 200 */
+    --sidebar-bg: #0f172a;           /* Carbon Steel Sidebar */
+    --sidebar-text: #94a3b8;         /* Brushed Zinc */
+    --sidebar-active-text: #ffffff;  /* Active Pure White */
+    --sidebar-active-bg: #1e293b;    /* Highlight slate */
+}
+
+/* Base Clean Reset & Sharp Typography */
+* {
+    font-family: 'Poppins', sans-serif !important;
+    letter-spacing: -0.01em;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Monospaced numbers for tabular data, IDs, and prices */
+.font-mono-numbers {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   CARDS & STRUCTURAL PANELS
+   ========================================================================== */
+.card {
+    background: #ffffff !important;
+    border: 1px solid var(--border-color-light) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04) !important;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s ease;
+}
+
+.card:hover {
+    border-color: var(--border-color) !important;
+}
+
+.card-body {
+    padding: 1.5rem !important;
+}
+
+/* ==========================================================================
+   BUTTONS (Crisp & High Contrast)
+   ========================================================================== */
+.btn {
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    padding: 8px 16px !important;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Primary Button - Brushed Carbon Steel */
+.btn-primary {
+    background: var(--color-primary) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--color-primary) !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background: #1e293b !important;
+    border-color: #1e293b !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12) !important;
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Secondary/Info Button - Blueprint Blue */
+.btn-info {
+    background: var(--color-info) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--color-info) !important;
+}
+
+.btn-info:hover {
+    background: #0369a1 !important;
+    border-color: #0369a1 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.15) !important;
+}
+
+/* Warning Button - Industrial Amber */
+.btn-warning {
+    background: var(--color-warning) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--color-warning) !important;
+}
+
+.btn-warning:hover {
+    background: #b45309 !important;
+    border-color: #b45309 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.15) !important;
+}
+
+/* Danger Button - Iron Oxide Red */
+.btn-danger {
+    background: var(--color-danger) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--color-danger) !important;
+}
+
+.btn-danger:hover {
+    background: #9f1239 !important;
+    border-color: #9f1239 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(190, 18, 60, 0.15) !important;
+}
+
+/* Outline Buttons */
+.btn-outline-steel {
+    background: transparent !important;
+    color: var(--color-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.btn-outline-steel:hover {
+    background: #f1f5f9 !important;
+    color: var(--color-foreground) !important;
+    border-color: var(--color-foreground) !important;
+}
+
+/* ==========================================================================
+   FORM INPUTS (Crisp, Thin Borders, High Legibility)
+   ========================================================================== */
+.minimal-input, .form-control {
+    background: #ffffff !important;
+    color: var(--color-foreground) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+}
+
+.minimal-input:focus, .form-control:focus {
+    border-color: var(--color-foreground) !important;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08) !important;
+    outline: none !important;
+}
+
+/* floating labels adjustments */
+.form-floating > .minimal-input,
+.form-floating > .form-control {
+    padding: 1.625rem 1rem 0.625rem !important;
+    height: 58px !important;
+}
+
+.form-floating > label {
+    padding: 1rem !important;
+    color: var(--color-secondary) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--color-foreground) !important;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
+}
+
+.minimal-select, .form-select {
+    background: #ffffff !important;
+    color: var(--color-foreground) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+}
+
+.minimal-select:focus, .form-select:focus {
+    border-color: var(--color-foreground) !important;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* ==========================================================================
+   BADGES (Subtle flat borders rather than heavy pills)
+   ========================================================================== */
+.badge {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+    border: 1px solid transparent;
+}
+
+.badge.bg-success {
+    background-color: rgba(15, 118, 110, 0.1) !important;
+    color: var(--color-success) !important;
+    border-color: rgba(15, 118, 110, 0.2) !important;
+}
+
+.badge.bg-danger {
+    background-color: rgba(190, 18, 60, 0.1) !important;
+    color: var(--color-danger) !important;
+    border-color: rgba(190, 18, 60, 0.2) !important;
+}
+
+.badge.bg-warning {
+    background-color: rgba(217, 119, 6, 0.1) !important;
+    color: var(--color-warning) !important;
+    border-color: rgba(217, 119, 6, 0.2) !important;
+}
+
+.badge.bg-secondary {
+    background-color: rgba(71, 85, 105, 0.1) !important;
+    color: var(--color-secondary) !important;
+    border-color: rgba(71, 85, 105, 0.2) !important;
+}
+
+.badge.bg-primary {
+    background-color: rgba(15, 23, 42, 0.1) !important;
+    color: var(--color-foreground) !important;
+    border-color: rgba(15, 23, 42, 0.2) !important;
+}
+
+/* ==========================================================================
+   CUSTOM SEARCH (Unified styling)
+   ========================================================================= */
+.custom-search-container {
+    position: relative;
+    max-width: 320px;
+}
+
+.custom-search-input {
+    width: 100%;
+    padding: 10px 40px 10px 16px !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    height: 44px !important;
+}
+
+.custom-search-input:focus {
+    border-color: var(--color-foreground) !important;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Select2 Custom Industrial Theme */
+.select2-container--default .select2-selection--single {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    height: 48px !important;
+    padding: 10px 14px !important;
+    background: #ffffff !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 26px !important;
+    color: var(--color-foreground) !important;
+    font-size: 14px !important;
+    padding-left: 0 !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: var(--color-foreground) !important;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08) !important;
+}
+
+.select2-dropdown {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.select2-results__option--highlighted[aria-selected] {
+    background-color: var(--color-primary) !important;
+    color: #ffffff !important;
+}

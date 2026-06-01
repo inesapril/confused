@@ -46,7 +46,10 @@
                             <tr>
                                 <th rowspan="2" style="color: var(--color-foreground); font-weight: 600; vertical-align: middle;">No</th>
                                 <th rowspan="2" style="color: var(--color-foreground); font-weight: 600; vertical-align: middle;">Nama Barang</th>
-                                <th rowspan="2" style="color: var(--color-foreground); font-weight: 600; vertical-align: middle;">Harga</th>
+                                <th rowspan="2" style="color: var(--color-foreground); font-weight: 600; vertical-align: middle;">Harga Jual</th>
+                                @if(Auth::user()->hasRole('Owner'))
+                                <th rowspan="2" style="color: var(--color-foreground); font-weight: 600; vertical-align: middle;">Harga Beli</th>
+                                @endif
                                 <th rowspan="2" style="color: var(--color-foreground); font-weight: 600; vertical-align: middle;">Satuan</th>
                                 <th colspan="2" style="color: var(--color-foreground); font-weight: 600; text-align: center; border-bottom: 1px solid #eee;">Persediaan</th>
                             </tr>
@@ -64,6 +67,11 @@
                                     <td>
                                         Rp {{ number_format($item->barang->harga, 0, ',', '.') }}
                                     </td>
+                                    @if(Auth::user()->hasRole('Owner'))
+                                    <td>
+                                        Rp {{ number_format($item->barang->harga_beli, 0, ',', '.') }}
+                                    </td>
+                                    @endif
                                     <td>{{ $item->barang->satuan }}</td>
                                     <td style="text-align: center;">
                                         <span class="badge bg-{{ $item->getSafetyStockColor() }}">
@@ -78,7 +86,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center" style="padding: 3rem;">
+                                    <td colspan="7" class="text-center" style="padding: 3rem;">
                                         <i data-lucide="layers" style="width: 48px; height: 48px; color: #6c757d;"></i>
                                         <div class="mt-3">
                                             <h6 class="text-muted">Belum ada data persediaan</h6>

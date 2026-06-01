@@ -23,17 +23,14 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Barang routes - Owner, Admin
-    Route::middleware('role:Owner,Admin')->group(function () {
+    Route::middleware(['role:Owner|Admin'])->group(function () {
+    Route::resource('persediaan', PersediaanController::class);
         Route::resource('barang', BarangController::class)->except(['show']);
         Route::get('/barang/export/excel',[BarangController::class, 'exportExcel'])->name('barang.export');
         Route::post('/barang/import/excel',[BarangController::class, 'importExcel'])->name('barang.import');
@@ -53,21 +50,21 @@ Route::middleware('auth')->group(function () {
         Route::resource('pesanan', PesananController::class);
         Route::resource('return_pesanan', ReturnPesananController::class);
         Route::resource('penyesuaian_persediaan', PenyesuaianPersediaanController::class);
-        Route::resource('persediaan', PersediaanController::class);
         Route::get('/persediaan/export/pdf', [PersediaanController::class, 'exportPdf'])->name('persediaan.exportPdf');
         Route::get('/barang/qr',[BarangController::class, 'qrForm'])->name('barang.label.index');
         Route::post('/barang/qr/download',[BarangController::class, 'downloadQrPdf'])->name('barang.downloadQrPdf');
         Route::get('/notifications', [NotificationController::class, 'getNotifications']);
         Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
         Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+        Route::get('laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.exportPdf');
+        Route::resource('laporan', LaporanController::class);
     });
 
     // User routes - Owner only
     Route::middleware('role:Owner')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
         Route::resource('user', UserController::class)->except(['show']);
         Route::get('user-roles', [UserController::class, 'roles'])->name('user.roles');
-        Route::get('laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.exportPdf');
-        Route::resource('laporan', LaporanController::class);
         Route::get('/cashflow', [CashFlowController::class, 'index'])->name('cashflow.index');
         Route::get('/cashflow/export-pdf', [CashFlowController::class, 'exportPdf'])->name('cashflow.exportPdf');
     });

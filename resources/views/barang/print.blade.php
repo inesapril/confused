@@ -30,8 +30,8 @@
                         <div class="mb-3">
                             <label class="form-label text-secondary small fw-bold">Ukuran Kertas & Layout</label>
                             <select name="paper_size" id="paper_size" class="form-select minimal-select w-100">
-                                <option value="a4_24">A4 - 3 Kolom (24 Label / Lembar)</option>
-                                <option value="a4_12">A4 - 2 Kolom (12 Label / Lembar)</option>
+                                <option value="a6_24">A6 - 3 Kolom (24 Label / Lembar)</option>
+                                <option value="a6_12">A6 - 2 Kolom (12 Label / Lembar)</option>
                                 <option value="single">Single Label (180mm x 45mm)</option>
                                 <option value="thermal">Thermal Roll (58mm x 27mm)</option>
                             </select>
@@ -82,7 +82,7 @@
                         <!-- Action Buttons -->
                         <div class="d-flex gap-2 mt-4">
                             <button type="submit" name="action" value="preview" class="btn btn-info flex-grow-1 text-white d-flex align-items-center justify-content-center">
-                                <i data-lucide="eye" class="me-2" style="width: 14px; height:14px;"></i> 
+                                <i data-lucide="file-search" class="me-2" style="width: 14px; height:14px;"></i> 
                                 Buka PDF
                             </button>
                             <button type="submit" name="action" value="download" class="btn btn-success flex-grow-1 d-flex align-items-center justify-content-center">
@@ -214,8 +214,8 @@
     transform-origin: top center;
 }
 
-/* A4 Sheet Mock (210mm x 297mm with 10mm margins) */
-.pdf-preview-sheet.a4-page {
+/* a6 Sheet Mock (210mm x 297mm with 10mm margins) */
+.pdf-preview-sheet.a6-page {
     width: 210mm;
     min-height: 297mm;
     padding: 10mm;
@@ -245,25 +245,25 @@
     text-align: left;
 }
 
-/* a4_24 layout */
-.pdf-preview-sheet.layout-a4_24 .label-box {
+/* a6_24 layout */
+.pdf-preview-sheet.layout-a6_24 .label-box {
     width: 61mm;
     height: 30mm;
     margin-right: 1mm;
     margin-bottom: 3mm;
 }
-.pdf-preview-sheet.layout-a4_24 .label-box:nth-child(3n) {
+.pdf-preview-sheet.layout-a6_24 .label-box:nth-child(3n) {
     margin-right: 0;
 }
 
-/* a4_12 layout */
-.pdf-preview-sheet.layout-a4_12 .label-box {
+/* a6_12 layout */
+.pdf-preview-sheet.layout-a6_12 .label-box {
     width: 90mm;
     height: 43mm;
     margin-right: 2mm;
     margin-bottom: 1mm;
 }
-.pdf-preview-sheet.layout-a4_12 .label-box:nth-child(2n) {
+.pdf-preview-sheet.layout-a6_12 .label-box:nth-child(2n) {
     margin-right: 0;
 }
 
@@ -459,7 +459,7 @@ function selectBarang(id, nama, kode){
             id: id,
             nama: nama,
             kode: kode,
-            qty: 1
+            qty: 0
         });
     } else {
         tempSelectedBarang.splice(index, 1);
@@ -508,11 +508,12 @@ function updateTableDisplay(){
             <td>
                 <input
                     type="number"
-                    min="1"
-                    class="form-control text-center py-1 font-mono-numbers"
+                    min="0"
+                    class="form-control text-center py-1 font-mono-numbers qty-input"
                     value="${item.qty}"
                     style="height: 32px; font-size: 12px; width: 70px; border-radius:4px;"
                     onchange="updateQuantity(${index}, this.value)"
+                    onclick="this.select()"
                 >
             </td>
             <td class="text-center">
@@ -603,8 +604,8 @@ function updateLivePreview() {
 
     // Define labels per page depending on template to match exact DOMPDF output count
     let labelsPerPage = 24;
-    if (paperSize === 'a4_24') labelsPerPage = 24;
-    else if (paperSize === 'a4_12') labelsPerPage = 12;
+    if (paperSize === 'a6_24') labelsPerPage = 24;
+    else if (paperSize === 'a6_12') labelsPerPage = 12;
     else if (paperSize === 'single') labelsPerPage = 5;
     else if (paperSize === 'thermal') labelsPerPage = 1; // 1 label per slide for thermal roll cuts!
 
@@ -614,9 +615,9 @@ function updateLivePreview() {
 
     let html = '';
     
-    // Render each slide page containing A4/Thermal sheets
+    // Render each slide page containing a6/Thermal sheets
     for (let p = 0; p < totalPages; p++) {
-        let pageClass = paperSize === 'thermal' ? 'pdf-preview-sheet thermal-page layout-thermal' : `pdf-preview-sheet a4-page layout-${paperSize}`;
+        let pageClass = paperSize === 'thermal' ? 'pdf-preview-sheet thermal-page layout-thermal' : `pdf-preview-sheet a6-page layout-${paperSize}`;
         
         html += `<div class="preview-slide">`;
         html += `<div class="${pageClass}">`;
@@ -704,5 +705,21 @@ function updateLivePreview() {
         }
     }
 }
+
+document.addEventListener('keydown', function(e) {
+    if (!e.target.classList.contains('qty-input')) return;
+
+    if (e.key === 'Enter') {
+        e.preventDefault();
+
+        const inputs = [...document.querySelectorAll('.qty-input')];
+        const index = inputs.indexOf(e.target);
+
+        if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+            inputs[index + 1].select();
+        }
+    }
+});
 </script>
 </x-app-layout>

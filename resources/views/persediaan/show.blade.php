@@ -43,13 +43,25 @@
 
                 <div class="col-md-3">
                     <small class="text-muted">
-                        Harga
+                        Harga Jual
                     </small>
 
                     <h5>
                         Rp {{ number_format($persediaan->barang->harga,0,',','.') }}
                     </h5>
                 </div>
+
+                @if(Auth::user()->hasRole('Owner'))
+                <div class="col-md-3">
+                    <small class="text-muted">
+                        Harga Beli
+                    </small>
+
+                    <h5>
+                        Rp {{ number_format($persediaan->barang->harga_beli,0,',','.') }}
+                    </h5>
+                </div>
+                @endif
 
                 <div class="col-md-3">
                     <small class="text-muted">
@@ -123,7 +135,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5"
+                            <td colspan="6"
                                 class="text-center text-muted py-4">
                                 Belum ada riwayat stok
                             </td>

@@ -380,20 +380,22 @@
             </div>
 
             <ul class="nav flex-column w-100 px-3">
-                @if(Auth::check())
+                @if(Auth::user()->hasRole('Owner'))
                     <li class="nav-item my-0.5">
                         <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                             <p class="d-flex"><i data-lucide="layout-dashboard" class="me-3"></i> Dashboard</p>
                         </a>
                     </li>
+                @endif
 
-                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Persediaan'))
+                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Admin'))
 
                     @php
                         $masterOpen =
                             request()->routeIs('barang.*') ||
                             request()->routeIs('supplier.*') ||
-                            request()->routeIs('reseller.*');
+                            request()->routeIs('reseller.*') ||
+                            request()->routeIs('toko.*');
                     @endphp
 
                     <li class="nav-item my-1">
@@ -488,7 +490,7 @@
 
                 @endif
 
-                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Persediaan'))
+                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Admin'))
                         <li class="nav-item my-0.5">
                             <a href="{{ route('persediaan.index') }}" class="nav-link {{ request()->routeIs('persediaan.*') ? 'active' : '' }}">
                                 <p class="d-flex"><i data-lucide="layers" class="me-3"></i> Persediaan</p>
@@ -496,7 +498,8 @@
                         </li>
                     @endif
 
-                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Persediaan'))
+                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Admin
+                    '))
                         <li class="nav-item my-0.5">
                             <a href="{{ route('penyesuaian_persediaan.index') }}" class="nav-link {{ request()->routeIs('penyesuaian_persediaan.*') ? 'active' : '' }}">
                                 <p class="d-flex"><i data-lucide="file-pen" class="me-3"></i>Stok Opname</p>
@@ -504,7 +507,7 @@
                         </li>
                     @endif
 
-                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Persediaan'))
+                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Admin'))
 
                     @php
                         $barangMasukOpen =
@@ -577,7 +580,7 @@
                     </li>
                     @endif
 
-                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Persediaan'))
+                    @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Admin'))
 
                     @php
                         $barangKeluarOpen =
@@ -648,15 +651,15 @@
                         </ul>
 
                     </li>
-                    @endif
                     
-                    @if(Auth::user()->hasRole('Owner'))
-                        <li class="nav-item my-0.5">
-                            <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
-                                <p class="d-flex"><i data-lucide="file-chart-column" class="me-3"></i>Laporan</p>
-                            </a>
-                        </li>
+                    <li class="nav-item my-0.5">
+                        <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
+                            <p class="d-flex"><i data-lucide="file-chart-column" class="me-3"></i>Laporan</p>
+                        </a>
+                    </li>
+                    @endif
 
+                    @if(Auth::user()->hasRole('Owner'))
                         <li class="nav-item my-0.5">
                             <a href="{{ route('cashflow.index') }}" class="nav-link {{ request()->routeIs('cashflow.*') ? 'active' : '' }}">
                                 <p class="d-flex align-items-center"><i data-lucide="wallet" class="me-3"></i>Cash Flow</p>
@@ -669,7 +672,6 @@
                             </a>
                         </li>
                     @endif
-                @endif
 
             </ul>
         </div>
@@ -787,7 +789,7 @@
                             <li>
                                 <button type="button" class="dropdown-item d-flex align-items-center py-2 px-3 text-danger small border-0 w-100 text-start bg-transparent" onclick="confirmLogout()">
                                     <i data-lucide="log-out" class="me-2 text-danger" style="width: 16px; height: 16px;"></i>
-                                    Keluar
+                                    Logout
                                 </button>
                             </li>
                         </ul>
@@ -1043,5 +1045,8 @@
                 }
             });
         </script>
+        <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display:none;">
+            @csrf
+        </form>
     </body>
 </html>

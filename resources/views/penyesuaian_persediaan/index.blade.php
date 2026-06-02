@@ -25,28 +25,69 @@
             </div>
         @endif
 
-        <a href="{{ route('persediaan.exportPdf') }}" target="_blank" class="btn btn-info">
-            <i data-lucide="download"></i>
-            Format Stok Opname
-        </a>
+        <!-- Header Action -->
+        <div class="card border-0 shadow-sm mb-4"
+            style="
+                background: var(--color-background);
+                border-radius: 18px;
+            ">
 
-        <!-- Search and Add Button Row -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <a href="{{ route('penyesuaian_persediaan.create') }}" class="btn btn-primary" style="background: linear-gradient(90deg, #4AC8EA 0%, #4AC8EA 100%); border: none;">
-                    <p class="d-flex align-items-center mb-0">
-                        <i data-lucide="plus" style="margin-right: 8px; width: 20px; height: 20px;"></i> Tambah Stok Opname
-                    </p>
-                </a>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-4 text-end">
-                <div class="custom-search-container">
-                    <input type="text" id="customSearch" class="custom-search-input" placeholder="Search">
-                    <i data-lucide="search" class="custom-search-icon" style="width: 18px; height: 18px;"></i>
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                <!-- Kiri -->
+                <div class="d-flex gap-2 align-items-center">
+
+                    <a href="{{ route('penyesuaian_persediaan.create') }}"
+                        class="btn px-4 action-btn"
+                        style="
+                            background: var(--color-foreground);
+                            color: var(--color-background);
+                            border: none;
+                            border-radius: 12px;
+                            height: 48px;
+                            font-weight: 600;
+                            white-space: nowrap;
+                        ">
+
+                        <i data-lucide="plus"
+                            class="me-2"
+                            style="width:18px;height:18px;">
+                        </i>
+
+                        Tambah Stok Opname
+
+                    </a>
+
+                    <a href="{{ route('persediaan.exportPdf') }}"
+                        target="_blank"
+                        class="btn btn-info action-btn">
+
+                        <i data-lucide="download"
+                            class="me-2"
+                            style="width:16px;height:16px;">
+                        </i>
+
+                        Format Stok Opname
+                    </a>
+
+                </div>
+
+                <!-- Kanan -->
+                <div class="search-wrapper">
+                    <div class="custom-search-container">
+                        <i data-lucide="search" class="custom-search-icon"></i>
+
+                        <input type="text"
+                            id="customSearch"
+                            class="custom-search-input"
+                            placeholder="Search">
+                    </div>
+                </div>
                 </div>
             </div>
-        </div>
+        </div>  
 
         <!-- Table Card -->
         <div class="card border-0 shadow-sm" style="background: var(--color-background); border-radius: 12px;">
@@ -190,4 +231,44 @@
             }
         </script>
     @endpush
+
+<style>
+.search-wrapper{
+    width:300px;
+}
+
+.custom-search-container{
+    position:relative;
+}
+
+.custom-search-input{
+    width:100%;
+    height:45px;
+    border:1px solid #dee2e6;
+    border-radius:12px;
+    padding-left:50px !important;
+}
+
+.custom-search-icon{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    color:#6c757d;
+    z-index:10;
+    pointer-events:none;
+}
+
+.action-btn{
+    min-width:180px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    white-space:nowrap;
+}
+</style>
 </x-app-layout>

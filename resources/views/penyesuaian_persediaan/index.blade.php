@@ -146,25 +146,16 @@
                                     zeroRecords: "Tidak ditemukan data yang sesuai",
                                     emptyTable: "Tidak ada data yang tersedia pada tabel ini",
                                     paginate: {
-                                        first: "Pertama",
-                                        previous: "Sebelumnya",
-                                        next: "Selanjutnya",
-                                        last: "Terakhir"
-                                    }
-                                },
-                                columnDefs: [
-                                    { orderable: false, targets: [4] }
-                                ],
-                                order: [[0, 'desc']],
-                                initComplete: function() {
-                                    // Style the length menu
-                                    $('.dataTables_length select').addClass('form-select form-select-sm');
-                                    $('.dataTables_length').addClass('mb-3');
-                                    
-                                    // Style pagination
-                                    $('.dataTables_paginate').addClass('mt-3');
-                                    $('.dataTables_info').addClass('mt-3');
-                                }
+                                            first: "Pertama",
+                                            previous: "‹",
+                                            next: "›",
+                                            last: "Terakhir"
+                                        }
+                                    },
+                                    columnDefs: [
+                                        { orderable: false, targets: [3] }
+                                    ],
+                                    order: [[0, 'asc']]
                             });
 
                             // Custom search functionality

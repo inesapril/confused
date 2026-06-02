@@ -6,13 +6,6 @@
                 <h4 class="mb-0" style="color: var(--color-foreground); font-weight: 600;">Tambah Penyesuaian Persediaan</h4>
                 <p class="text-muted mb-0" style="font-size: 14px;">Tambah data stok opname baru</p>
             </div>
-            <div class="col-md-6 text-end">
-                <a href="{{ route('penyesuaian_persediaan.index') }}" class="btn btn-outline-secondary">
-                    <p class="d-flex align-items-center mb-0">
-                        <i data-lucide="arrow-left" style="margin-right: 8px; width: 20px; height: 20px;"></i> Kembali
-                    </p>
-                </a>
-            </div>
         </div>
 
         <!-- Form Card -->

@@ -18,45 +18,112 @@
             </div>
         @endif
 
-        <!-- Search and Add Button Row -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <a href="{{ route('reseller.create') }}" class="btn btn-primary" style="background: linear-gradient(90deg, #4AC8EA 0%, #4AC8EA 100%); border: none;">
-                    <p class="d-flex align-items-center mb-0">
-                        <i data-lucide="plus" style="margin-right: 8px; width: 20px; height: 20px;"></i> Tambah Reseller
-                    </p>
-                </a>
-                <a href="{{ route('reseller.exportBarang') }}"
-                    class="btn btn-success">
-                    Export Reseller
-                </a>
-                <form action="{{ route('reseller.importBarang') }}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                    class="d-inline">
-                    @csrf
+        <!-- Header Action -->
+        <div class="card border-0 shadow-sm mb-4"
+            style="
+                background: var(--color-background);
+                border-radius: 18px;
+            ">
 
-                    <input type="file" name="file" required>
+            <div class="card-body p-4">
 
-                    <button class="btn btn-info">
-                        Import Reseller
-                    </button>
-                </form>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-4 text-end">
-                <div class="custom-search-container">
-                    <input type="text" id="customSearch" class="custom-search-input" placeholder="Search">
-                    <i data-lucide="search" class="custom-search-icon" style="width: 18px; height: 18px;"></i>
+                <!-- Tombol Utama -->
+                <div class="mb-4">
+
+                    <a href="{{ route('reseller.create') }}"
+                        class="btn px-4 action-btn"
+                        style="
+                            background: var(--color-foreground);
+                            color: var(--color-background);
+                            border: none;
+                            border-radius: 12px;
+                            height: 48px;
+                            font-weight: 600;
+                            white-space: nowrap;
+                        ">
+
+                        <i data-lucide="plus"
+                            class="me-2"
+                            style="width:18px;height:18px;">
+                        </i>
+
+                        Tambah Reseller
+
+                    </a>
+
                 </div>
+
+                <!-- Utilitas -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+                    <!-- Kiri -->
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+
+                        <a href="{{ route('reseller.exportBarang') }}"
+                            class="btn btn-success action-btn">
+
+                            <i data-lucide="download"
+                                class="me-2"
+                                style="width:16px;height:16px;">
+                            </i>
+
+                            Export Reseller
+
+                        </a>
+
+                        <form action="{{ route('reseller.importBarang') }}"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            class="d-flex flex-wrap gap-2 align-items-center">
+
+                            @csrf
+
+                            <input type="file"
+                                name="file"
+                                required
+                                class="form-control form-control-sm"
+                                style="max-width:160px;">
+
+                            <button type="submit"
+                                class="btn btn-info action-btn">
+
+                                <i data-lucide="upload"
+                                    class="me-2"
+                                    style="width:16px;height:16px;">
+                                </i>
+
+                                Import Reseller
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- Search -->
+                    <div class="col-md-4 text-end">
+                        <div class="custom-search-container">
+                            <input type="text" id="customSearch" class="custom-search-input" placeholder="Search">
+                            <i data-lucide="search" class="custom-search-icon" style="width: 18px; height: 18px;"></i>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
 
         <!-- Table Card -->
-        <div class="card border-0 shadow-sm" style="background: var(--color-background); border-radius: 12px;">
+         <div class="card border-0 shadow-sm"
+        style="
+            background: var(--color-background);
+            border-radius: 18px;
+            overflow: hidden;
+        ">
             <div class="card-body" style="padding: 1.5rem;">
                 <div class="table-responsive">
-                    <table id="ReturnPesananTable" class="table table-striped table-hover align-middle">
+                    <table id="ResellerTable" class="table table-striped table-hover align-middle">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -116,6 +183,18 @@
         </div>
     </div>
 
+<style>
+.action-btn{
+    min-width: 150px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Wait for all scripts to load
@@ -124,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Destroy existing DataTable if it exists
                 if ($.fn.DataTable.isDataTable('#resellerTable')) {
-                    $('#resellerTable').DataTable().destroy();
+                    $('#ResellerTable').DataTable().destroy();
                 }
                 
                 var table = $('#resellerTable').DataTable({
@@ -146,24 +225,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         emptyTable: "Tidak ada data yang tersedia pada tabel ini",
                         paginate: {
                             first: "Pertama",
-                            previous: "Sebelumnya",
-                            next: "Selanjutnya",
+                            previous: "‹",
+                            next: "›",
                             last: "Terakhir"
                         }
                     },
                     columnDefs: [
                         { orderable: false, targets: [3] }
                     ],
-                    order: [[0, 'asc']],
-                    initComplete: function() {
-                        // Style the length menu
-                        $('.dataTables_length select').addClass('form-select form-select-sm');
-                        $('.dataTables_length').addClass('mb-3');
-                        
-                        // Style pagination
-                        $('.dataTables_paginate').addClass('mt-3');
-                        $('.dataTables_info').addClass('mt-3');
-                    }
+                    order: [[0, 'asc']]
                 });
 
                 // Custom search functionality

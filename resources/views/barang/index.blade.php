@@ -35,6 +35,18 @@
             </div>
         @endif
 
+        <!-- Info -->
+                <div class="mb-4">
+                    <h5 class="mb-1 fw-bold"
+                        style="color: var(--color-foreground);">
+                        Data Barang
+                    </h5>
+
+                    <p class="mb-0 text-muted">
+                        Kelola data barang inventory
+                    </p>
+                </div>
+
         <!-- Header Action -->
         <div class="card border-0 shadow-sm mb-4"
             style="
@@ -44,152 +56,101 @@
 
             <div class="card-body p-4">
 
-                <!-- Top -->
-                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                <!-- Tombol Utama -->
+                <div class="mb-4">
 
-                    <!-- Tambah Barang -->
                     <a href="{{ route('barang.create') }}"
-                        class="btn px-4 py-2"
+                        class="btn px-4 action-btn"
                         style="
                             background: var(--color-foreground);
                             color: var(--color-background);
                             border: none;
                             border-radius: 12px;
-                            font-weight: 600;
-                            min-width: 180px;
                             height: 48px;
+                            font-weight: 600;
+                            white-space: nowrap;
                         ">
 
-                        <div class="d-flex align-items-center justify-content-center">
-                            <i data-lucide="plus"
-                                class="me-2"
-                                style="width: 18px; height: 18px;">
-                            </i>
+                        <i data-lucide="plus"
+                            class="me-2"
+                            style="width:18px;height:18px;">
+                        </i>
 
-                            Tambah Barang
-                        </div>
+                        Tambah Barang
 
                     </a>
-
-                    <!-- Search -->
-                    <div style="width: 320px; max-width: 100%;">
-
-                        <div class="position-relative">
-
-                            <input type="text"
-                                id="customSearch"
-                                class="form-control ps-5"
-                                placeholder="Cari barang..."
-                                style="
-                                    height: 48px;
-                                    border-radius: 14px;
-                                ">
-
-                            <i data-lucide="search"
-                                class="position-absolute"
-                                style="
-                                    width: 18px;
-                                    height: 18px;
-                                    left: 18px;
-                                    top: 50%;
-                                    transform: translateY(-50%);
-                                    opacity: .5;
-                                ">
-                            </i>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
-                <!-- Bottom -->
-                <div class="d-flex flex-wrap gap-2 align-items-center">
+                <!-- Utilitas -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
 
-                    <!-- Export -->
-                    <a href="{{ route('barang.export') }}"
-                        class="btn px-3 py-2"
-                        style="
-                            background: rgba(255,255,255,0.04);
-                            color: var(--color-foreground);
-                            border: 1px solid rgba(255,255,255,0.08);
-                            border-radius: 10px;
-                            height: 44px;
-                        ">
+                    <!-- Kiri -->
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
 
-                        <div class="d-flex align-items-center">
+                        <!-- Export -->
+                        <a href="{{ route('barang.export') }}"
+                            class="btn btn-success action-btn">
+
                             <i data-lucide="download"
                                 class="me-2"
-                                style="width: 16px; height: 16px;">
+                                style="width:16px;height:16px;">
                             </i>
 
                             Export Excel
-                        </div>
 
-                    </a>
+                        </a>
 
-                    <!-- Import -->
-                    <form action="{{ route('barang.import') }}"
-                        method="POST"
-                        enctype="multipart/form-data"
-                        class="d-flex flex-wrap gap-2 align-items-center">
+                        <!-- Import -->
+                        <form action="{{ route('barang.import') }}"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            class="d-flex flex-wrap gap-2 align-items-center">
 
-                        @csrf
+                            @csrf
 
-                        <input type="file"
-                            name="file"
-                            required
-                            class="form-control"
-                            style="
-                                max-width: 220px;
-                                height: 44px;
-                                border-radius: 10px;
-                            ">
+                            <input type="file"
+                                name="file"
+                                required
+                                class="form-control form-control-sm"
+                                style="max-width:160px;">
 
-                        <button type="submit"
-                            class="btn px-3 py-2"
-                            style="
-                                background: rgba(255,255,255,0.04);
-                                color: var(--color-foreground);
-                                border: 1px solid rgba(255,255,255,0.08);
-                                border-radius: 10px;
-                                height: 44px;
-                            ">
+                            <button type="submit"
+                                class="btn btn-info action-btn">
 
-                            <div class="d-flex align-items-center">
                                 <i data-lucide="upload"
                                     class="me-2"
-                                    style="width: 16px; height: 16px;">
+                                    style="width:16px;height:16px;">
                                 </i>
 
                                 Import Excel
-                            </div>
 
-                        </button>
+                            </button>
 
-                    </form>
+                        </form>
 
-                    <!-- QR -->
-                    <a href="{{ route('barang.label.index') }}"
-                        class="btn px-3 py-2"
-                        style="
-                            background: rgba(255,255,255,0.04);
-                            color: var(--color-foreground);
-                            border: 1px solid rgba(255,255,255,0.08);
-                            border-radius: 10px;
-                            height: 44px;
-                        ">
+                        <!-- QR -->
+                        <a href="{{ route('barang.label.index') }}"
+                            class="btn btn-secondary action-btn">
 
-                        <div class="d-flex align-items-center">
                             <i data-lucide="qr-code"
                                 class="me-2"
-                                style="width: 16px; height: 16px;">
+                                style="width:16px;height:16px;">
                             </i>
 
                             QR Code
-                        </div>
 
-                    </a>
+                            </a>
+
+                    </div>
+
+                    <!-- Search -->
+                    <div class="col-md-4 text-end">
+                        <div class="custom-search-container">
+                            <input type="text" id="customSearch" class="custom-search-input" placeholder="Search">
+                            <i data-lucide="search" class="custom-search-icon" style="width: 18px; height: 18px;"></i>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -209,9 +170,8 @@
 
                 <div class="table-responsive">
 
-                    <!-- BIAR NGIKUT STYLE GLOBAL -->
                     <table id="barangTable"
-                        class="table table-hover align-middle mb-0">
+                    class="table table-striped table-hover align-middle">
 
                         <thead>
                             <tr>
@@ -258,76 +218,48 @@
                                         {{ $barang->satuan }}
                                     </td>
 
-                                    <td class="text-center">
-
-                                        <div class="d-flex justify-content-center gap-2">
-
-                                            <!-- Edit -->
+                                    <td>
+                                        <div class="btn-group">
                                             <a href="{{ route('barang.edit', $barang->id) }}"
-                                                class="btn btn-sm d-flex align-items-center justify-content-center"
-                                                style="
-                                                    width: 38px;
-                                                    height: 38px;
-                                                    border-radius: 10px;
-                                                    background: rgba(255,255,255,0.05);
-                                                    color: var(--color-foreground);
-                                                    border: 1px solid rgba(255,255,255,0.08);
-                                                ">
-
-                                                <i data-lucide="edit"
-                                                    style="width: 18px; height: 18px;">
-                                                </i>
-
+                                                class="btn btn-warning btn-sm">
+                                                <i data-lucide="edit"></i>
                                             </a>
-
-                                            <!-- Delete -->
                                             <button type="button"
-                                                class="btn btn-sm d-flex align-items-center justify-content-center"
-                                                style="
-                                                    width: 38px;
-                                                    height: 38px;
-                                                    border-radius: 10px;
-                                                    background: rgba(255,255,255,0.05);
-                                                    color: #ff6b6b;
-                                                    border: 1px solid rgba(255,255,255,0.08);
-                                                "
+                                                class="btn btn-danger btn-sm"
                                                 onclick="confirmDelete({{ $barang->id }})">
-
-                                                <i data-lucide="trash-2"
-                                                    style="width: 18px; height: 18px;">
-                                                </i>
-
+                                                <i data-lucide="trash-2"></i>
                                             </button>
 
                                             <form id="deleteForm{{ $barang->id }}"
                                                 action="{{ route('barang.destroy', $barang->id) }}"
                                                 method="POST"
-                                                style="display: none;">
+                                                style="display:none;">
 
                                                 @csrf
                                                 @method('DELETE')
-
                                             </form>
-
                                         </div>
-
                                     </td>
-
                                 </tr>
-
                             @endforeach
-
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
+
+<style>
+.action-btn{
+    min-width: 150px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

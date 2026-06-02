@@ -141,38 +141,33 @@ $(document).ready(function() {
                 }
 
                 var table = $('#persediaanTable').DataTable({
-                    dom: 'lrtip',
+                    responsive: true,
+                    pageLength: 50,
+                    lengthMenu: [[50, 100, -1], [50, 100, "Semua"]],
+                    searching: true,
+                    dom: 'lrtip', // Hide default search box
                     language: {
-                        "lengthMenu": "Tampilkan _MENU_ data per halaman",
-                        "zeroRecords": "Data tidak ditemukan",
-                        "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
-                        "infoEmpty": "Tidak ada data yang tersedia",
-                        "infoFiltered": "(difilter dari _MAX_ total data)",
-                        "paginate": {
-                            "first": "Pertama",
-                            "last": "Terakhir", 
-                            "next": "Selanjutnya",
-                            "previous": "Sebelumnya"
+                        processing: "Sedang memproses...",
+                        search: "Cari:",
+                        lengthMenu: "Tampilkan _MENU_ entri",
+                        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                        infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                        infoFiltered: "(disaring dari _MAX_ entri keseluruhan)",
+                        infoPostFix: "",
+                        loadingRecords: "Sedang memuat...",
+                        zeroRecords: "Tidak ditemukan data yang sesuai",
+                        emptyTable: "Tidak ada data yang tersedia pada tabel ini",
+                        paginate: {
+                            first: "Pertama",
+                            previous: "‹",
+                            next: "›",
+                            last: "Terakhir"
                         }
                     },
-                    pageLength: 50,
-                    lengthChange: false,
-                    "responsive": true,
-                    "searching": true,
-                    "drawCallback": function() {
-                        // Re-initialize Lucide icons after each draw
-                        if (typeof lucide !== 'undefined') {
-                            lucide.createIcons();
-                        }
-                        
-                        // Style the pagination and other elements
-                        $('.dataTables_length select').addClass('form-select form-select-sm');
-                        $('.dataTables_length').addClass('mb-3');
-                        
-                        // Style pagination
-                        $('.dataTables_paginate').addClass('mt-3');
-                        $('.dataTables_info').addClass('mt-3');
-                    }
+                    columnDefs: [
+                        { orderable: false, targets: [3] }
+                    ],
+                    order: [[0, 'asc']]
                 });
 
                 // Custom search functionality

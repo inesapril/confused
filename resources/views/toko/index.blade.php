@@ -37,7 +37,6 @@
                             color: var(--color-background);
                             border: none;
                             border-radius: 12px;
-                            height: 48px;
                             font-weight: 600;
                             white-space: nowrap;
                         ">
@@ -182,13 +181,18 @@
 
 <style>
 .action-btn{
-    min-width: 150px;
-    height: 45px;
+    min-width: 120px;
+    height: 36px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+
+    gap: 6px;
     white-space: nowrap;
+
+    font-size: 11px !important;
+    padding: 0 12px !important;
 }
 </style>
 

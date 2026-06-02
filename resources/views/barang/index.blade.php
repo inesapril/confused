@@ -60,20 +60,18 @@
                 <div class="mb-4">
 
                     <a href="{{ route('barang.create') }}"
-                        class="btn px-4 action-btn"
-                        style="
-                            background: var(--color-foreground);
-                            color: var(--color-background);
-                            border: none;
-                            border-radius: 12px;
-                            height: 48px;
-                            font-weight: 600;
-                            white-space: nowrap;
-                        ">
+                    class="btn action-btn"
+                    style="
+                        background: var(--color-foreground);
+                        color: var(--color-background);
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: 600;
+                    ">
 
                         <i data-lucide="plus"
                             class="me-2"
-                            style="width:18px;height:18px;">
+                            style="width:14px;height:14px;">
                         </i>
 
                         Tambah Barang
@@ -251,13 +249,18 @@
 
 <style>
 .action-btn{
-    min-width: 150px;
-    height: 45px;
+    min-width: 120px;
+    height: 36px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+
+    gap: 6px;
     white-space: nowrap;
+
+    font-size: 11px !important;
+    padding: 0 12px !important;
 }
 </style>
 

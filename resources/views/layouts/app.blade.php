@@ -190,10 +190,17 @@
             font-weight: 700 !important;
             text-transform: uppercase !important;
             letter-spacing: 0.05em !important;
-            background: #f8fafc !important; /* Concrete gray header */
+            background: #f8fafc !important;
             color: var(--color-secondary) !important;
             border-bottom: 2px solid var(--border-color) !important;
             white-space: nowrap;
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+
+        .table thead th {
+            text-align: center !important;
+            vertical-align: middle !important;
         }
 
         .table td {
@@ -219,12 +226,24 @@
         /* ===== BUTTONS GLOBAL OVERRIDES ===== */
         .btn {
             border-radius: 6px !important;
-            font-size: 11px !important;
+            font-size: 10px !important;
             font-weight: 600 !important;
-            padding: 8px 14px !important;
-            letter-spacing: 0.03em !important;
-            text-transform: uppercase !important;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            padding: 6px 10px !important;
+        }
+
+        .table .btn {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .table .btn i,
+        .table .btn svg {
+            width: 14px !important;
+            height: 14px !important;
         }
 
         /* Add Item / Success / Save */
@@ -245,30 +264,27 @@
 
         /* Edit / Adjust */
         .btn-warning {
-            background: var(--color-warning) !important;
-            border-color: var(--color-warning) !important;
-            color: #ffffff !important;
+            background: rgba(217,119,6,.12) !important;
+            border: 1px solid rgba(217,119,6,.2) !important;
+            color: #d97706 !important;
         }
 
         .btn-warning:hover {
-            background: #b45309 !important;
-            border-color: #b45309 !important;
-            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.15) !important;
-            transform: translateY(-1px);
+            background: rgba(217,119,6,.2) !important;
+            color: #b45309 !important;
         }
+
 
         /* Delete / Warning Alert */
         .btn-danger {
-            background: var(--color-danger) !important;
-            border-color: var(--color-danger) !important;
-            color: #ffffff !important;
+            background: rgba(225,29,72,.12) !important;
+            border: 1px solid rgba(225,29,72,.2) !important;
+            color: #e11d48 !important;
         }
 
         .btn-danger:hover {
-            background: #9f1239 !important;
-            border-color: #9f1239 !important;
-            box-shadow: 0 4px 10px rgba(190, 18, 60, 0.15) !important;
-            transform: translateY(-1px);
+            background: rgba(225,29,72,.2) !important;
+            color: #be123c !important;
         }
 
         /* Details / Blueprint Skyline */

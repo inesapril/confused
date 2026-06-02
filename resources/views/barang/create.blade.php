@@ -159,7 +159,7 @@
         </div>
     </div>
 
-    <!-- Submit Buttons -->
+<!-- Submit Buttons -->
 <div class="d-flex justify-content-end gap-3 mt-5">
     <a href="{{ route('barang.index') }}" class="btn btn-light minimal-btn-secondary">
         <p class="d-flex align-items-center mb-0">
@@ -171,7 +171,7 @@
         form="barangForm"
         class="btn btn-primary minimal-btn-primary">
             <p class="d-flex align-items-center mb-0">
-                <i data-lucide="save" style="margin-right: 8px; width: 20px; height: 20px;"></i> Simpan Barang
+                <i data-lucide="save" style="margin-right: 8px; width: 20px; height: 20px;"></i> Simpan Supplier
             </p>
     </button>
 </div>

@@ -178,25 +178,22 @@
                 </form>
             </div>
         </div>
-        <div class="d-flex justify-content-end gap-2 mt-4">
-            <a href="{{ route('barang.index') }}"
-            class="btn btn-light px-4">
-
-                <i data-lucide="x" class="me-2"></i>
-                Batal
+    </div>
+            <!-- Submit Buttons -->
+        <div class="d-flex justify-content-end gap-3 mt-5">
+            <a href="{{ route('barang.index') }}" class="btn btn-light minimal-btn-secondary">
+                <p class="d-flex align-items-center mb-0">
+                    <i data-lucide="x" style="margin-right: 8px; width: 20px; height: 20px;"></i> Batal
+                </p>
             </a>
-
-            <button
+            <button 
                 type="submit"
                 form="barangForm"
-                class="btn btn-primary px-4"
-                style="background:#4AC8EA; border:none;">
-
-                <i data-lucide="save" class="me-2"></i>
-                Simpan Barang
+                class="btn btn-primary minimal-btn-primary">
+                    <p class="d-flex align-items-center mb-0">
+                        <i data-lucide="save" style="margin-right: 8px; width: 20px; height: 20px;"></i> Simpan Supplier
+                    </p>
             </button>
-
         </div>
-    </div>
 
 </x-app-layout>

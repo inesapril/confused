@@ -65,146 +65,94 @@
                             </div>
                         </div>
 
-                        <!-- Kategori -->
-                        <div class="col-md-6">
-                            <div class="minimal-select-container">
+                        <div class="row g-4">
+                            <!-- Harga Jual -->
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number"
+                                        class="form-control minimal-input @error('harga') is-invalid @enderror"
+                                        id="harga"
+                                        name="harga"
+                                        value="{{ old('harga') }}"
+                                        placeholder="Harga Barang"
+                                        required>
 
-                                <label for="kategori" class="minimal-label">
-                                    Kategori *
-                                </label>
+                                    <label for="harga">Harga Jual *</label>
 
-                                <select
-                                    class="form-select minimal-select @error('kategori') is-invalid @enderror"
-                                    id="kategori"
-                                    name="kategori"
-                                    required
-                                >
-                                    <option value="">Pilih Kategori</option>
+                                    @error('harga')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
 
-                                    <option value="Jaket"
-                                        {{ old('kategori') == 'Jaket' ? 'selected' : '' }}>
-                                        Jaket
-                                    </option>
+                            <!-- Harga Beli (HPP) -->
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number"
+                                        class="form-control minimal-input @error('harga_beli') is-invalid @enderror"
+                                        id="harga_beli"
+                                        name="harga_beli"
+                                        value="{{ old('harga_beli') }}"
+                                        placeholder="Harga Beli (HPP)"
+                                        required>
 
-                                    <option value="Rompi"
-                                        {{ old('kategori') == 'Rompi' ? 'selected' : '' }}>
-                                        Rompi
-                                    </option>
+                                    <label for="harga_beli">Harga Beli (HPP) *</label>
 
-                                    <option value="Kerah"
-                                        {{ old('kategori') == 'Kerah' ? 'selected' : '' }}>
-                                        Kerah
-                                    </option>
-                                    
-                                    <option value="Baju"
-                                        {{ old('kategori') == 'Baju' ? 'selected' : '' }}>
-                                        Baju
-                                    </option>
+                                    @error('harga_beli')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
 
-                                    <option value="Celana"
-                                        {{ old('kategori') == 'Celana_pendek' ? 'selected' : '' }}>
-                                        Celana Pendek
-                                    </option>
+                            <!-- Kategori -->
+                            <div class="col-md-6">
+                                <div class="minimal-select-container">
+                                    <label for="kategori" class="minimal-label">Kategori *</label>
 
-                                    <option value="Celana"
-                                        {{ old('kategori') == 'Celana_panjang' ? 'selected' : '' }}>
-                                        Celana Panjang
-                                    </option>
+                                    <select class="form-select minimal-select @error('kategori') is-invalid @enderror"
+                                        id="kategori"
+                                        name="kategori"
+                                        required>
 
-                                    
-                                </select>
+                                        <option value="">Pilih Kategori</option>
+                                        <option value="Jaket" {{ old('kategori') == 'Jaket' ? 'selected' : '' }}>Jaket</option>
+                                        <option value="Rompi" {{ old('kategori') == 'Rompi' ? 'selected' : '' }}>Rompi</option>
+                                        <option value="Kerah" {{ old('kategori') == 'Kerah' ? 'selected' : '' }}>Kerah</option>
+                                        <option value="Baju" {{ old('kategori') == 'Baju' ? 'selected' : '' }}>Baju</option>
+                                        <option value="Celana_pendek" {{ old('kategori') == 'Celana_pendek' ? 'selected' : '' }}>Celana Pendek</option>
+                                        <option value="Celana_panjang" {{ old('kategori') == 'Celana_panjang' ? 'selected' : '' }}>Celana Panjang</option>
 
-                                @error('kategori')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                    </select>
 
+                                    @error('kategori')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Satuan -->
+                            <div class="col-md-6">
+                                <div class="minimal-select-container">
+                                    <label for="satuan" class="minimal-label">Satuan *</label>
+
+                                    <select class="form-select minimal-select @error('satuan') is-invalid @enderror"
+                                        id="satuan"
+                                        name="satuan"
+                                        required>
+
+                                        <option value="">Pilih Satuan</option>
+                                        <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : '' }}>PCS</option>
+                                        <option value="kg" {{ old('satuan') == 'kg' ? 'selected' : '' }}>KG</option>
+                                        <option value="gram" {{ old('satuan') == 'gram' ? 'selected' : '' }}>Gram</option>
+
+                                    </select>
+
+                                    @error('satuan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Satuan -->
-                        <div class="col-md-6">
-                            <div class="minimal-select-container">
-
-                                <label for="satuan" class="minimal-label">
-                                    Satuan *
-                                </label>
-
-                                <select
-                                    class="form-select minimal-select @error('satuan') is-invalid @enderror"
-                                    id="satuan"
-                                    name="satuan"
-                                    required
-                                >
-                                    <option value="">Pilih Satuan</option>
-
-                                    <option value="pcs"
-                                        {{ old('satuan') == 'pcs' ? 'selected' : '' }}>
-                                        PCS
-                                    </option>
-
-                                    <option value="kg"
-                                        {{ old('satuan') == 'kg' ? 'selected' : '' }}>
-                                        KG
-                                    </option>
-
-                                    <option value="gram"
-                                        {{ old('satuan') == 'gram' ? 'selected' : '' }}>
-                                        Gram
-                                    </option>
-                                </select>
-
-                                @error('satuan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-
-                            </div>
-                        </div>
-
-                        <!-- Harga Barang -->
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input
-                                    type="number"
-                                    class="form-control minimal-input @error('harga') is-invalid @enderror"
-                                    id="harga"
-                                    name="harga"
-                                    value="{{ old('harga') }}"
-                                    placeholder="Harga Barang"
-                                    required
-                                >
-
-                                <label for="harga">
-                                    Harga Barang *
-                                </label>
-
-                                @error('harga')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Harga Beli -->
-                        <div class="col-md-6">
-                            <label>Harga Beli (HPP)</label>
-                            <input type="number"
-                                name="harga_beli"
-                                class="form-control"
-                                value="{{ old('harga_beli') }}"
-                                required>
-
-                                @error('harga_beli')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                        </div>
-
                     </div>
                 </form>
             </div>

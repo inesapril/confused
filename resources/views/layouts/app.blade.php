@@ -193,14 +193,13 @@
             background: #f8fafc !important;
             color: var(--color-secondary) !important;
             border-bottom: 2px solid var(--border-color) !important;
-            white-space: nowrap;
-            text-align: center !important;
+
+            text-align: left !important;
             vertical-align: middle !important;
         }
 
         .table thead th {
-            text-align: center !important;
-            vertical-align: middle !important;
+            text-align: left !important;
         }
 
         .table td {

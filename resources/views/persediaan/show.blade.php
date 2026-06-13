@@ -73,16 +73,6 @@
                     </h5>
                 </div>
 
-                <div class="col-md-3">
-                    <small class="text-muted">
-                        Stok Sekarang
-                    </small>
-
-                    <h5 class="text-primary">
-                        {{ $persediaan->stock }}
-                    </h5>
-                </div>
-
             </div>
 
         </div>

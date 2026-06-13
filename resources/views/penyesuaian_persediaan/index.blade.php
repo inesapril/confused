@@ -37,7 +37,7 @@
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
                 <!-- Kiri -->
-                <div class="d-flex gap-2 align-items-center">
+                <div class="d-flex gap-2 align-items-center flex-wrap">
 
                     <a href="{{ route('penyesuaian_persediaan.create') }}"
                         class="btn px-4 action-btn"

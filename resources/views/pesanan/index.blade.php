@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         { orderable: false, targets: [3] }
                     ],
                     order: [[0, 'asc']]
+                });  
 
                 $(document).on('click', '.clickable-row', function(e) {
                     // kalau klik tombol edit/hapus, jangan pindah ke detail

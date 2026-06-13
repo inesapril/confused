@@ -9,6 +9,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Exports\BarangExport;
 use App\Imports\BarangImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class BarangController extends Controller
 {
@@ -159,20 +160,28 @@ class BarangController extends Controller
     public function importExcel(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
+            'file' => 'required|mimes:xlsx,xls,csv'
         ]);
 
-        Excel::import(
-            new BarangImport,
-            $request->file('file')
-        );
+        try {
 
-        return redirect()
-            ->route('barang.index')
-            ->with(
-                'success',
-                'Import data barang berhasil!'
+            Excel::import(
+                new BarangImport,
+                $request->file('file')
             );
+
+            return back()->with(
+                'success',
+                'Import data barang berhasil.'
+            );
+
+        } catch (\Exception $e) {
+
+            return back()->with(
+                'error',
+                'Format file tidak sesuai template barang.'
+            );
+        }
     }
 
     /**

@@ -111,6 +111,9 @@
 
                             <td>
                                 {{ $item['jenis'] }}
+                                @if(isset($item['is_revised']) && $item['is_revised'])
+                                    <span class="badge bg-warning text-dark ms-1" style="font-size: 10px;">Direvisi</span>
+                                @endif
                             </td>
 
                             <td>

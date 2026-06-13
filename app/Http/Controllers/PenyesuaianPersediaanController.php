@@ -136,27 +136,13 @@ class PenyesuaianPersediaanController extends Controller
         try {
             $penyesuaianPersediaan = PenyesuaianPersediaan::findOrFail($id);
 
-            // kembalikan stok lama
-            foreach ($penyesuaianPersediaan->details as $detail) {
-                $persediaan = $detail->barang->persediaan;
+            // Map old details by barang_id for easy lookup
+            $oldDetails = $penyesuaianPersediaan->details->keyBy('barang_id');
 
-                if ($persediaan) {
-                    $persediaan->update([
-                        'stock' => $detail->stok_sistem
-                    ]);
-                }
-            }
+            // Array to hold the list of barang IDs processed in the request
+            $processedBarangIds = [];
 
-            // hapus detail lama
-            $penyesuaianPersediaan->details()->delete();
-
-            // update header
-            $penyesuaianPersediaan->update([
-                'tanggal_penyesuaian' => $request->tanggal_penyesuaian,
-                'keterangan' => $request->keterangan,
-            ]);
-
-            // simpan detail baru
+            // loop request barang
             foreach ($request->barang_id as $index => $barangId) {
                 $barang = Barang::findOrFail($barangId);
                 $persediaan = $barang->persediaan;
@@ -167,24 +153,76 @@ class PenyesuaianPersediaanController extends Controller
                     );
                 }
 
-                $stokSistem = $persediaan->stock;
-                $stokReal   = $request->stok_fisik[$index];
-                $selisih    = $stokReal - $stokSistem;
+                $stokReal = $request->stok_fisik[$index];
 
+                if ($oldDetails->has($barangId)) {
+                    // Barang already exists in this stock opname
+                    $oldDetail = $oldDetails->get($barangId);
+                    $oldStokFisik = $oldDetail->stok_fisik;
+                    $stokSistem = $oldDetail->stok_sistem; // keep original system stock
+
+                    $delta = $stokReal - $oldStokFisik;
+
+                    if ($delta > 0) {
+                        $persediaan->increment('stock', $delta);
+                    } elseif ($delta < 0) {
+                        $persediaan->decrement('stock', abs($delta));
+                    }
+                } else {
+                    // This is a new barang added to this stock opname during edit
+                    $stokSistem = $persediaan->stock;
+                    
+                    $persediaan->update([
+                        'stock' => $stokReal
+                    ]);
+                }
+
+                $processedBarangIds[$barangId] = [
+                    'stok_sistem' => $stokSistem,
+                    'stok_fisik' => $stokReal,
+                    'selisih' => $stokReal - $stokSistem,
+                ];
+            }
+
+            // Revert stock for any barang that was removed from the stock opname during edit
+            foreach ($oldDetails as $barangId => $oldDetail) {
+                if (!array_key_exists($barangId, $processedBarangIds)) {
+                    $persediaan = $oldDetail->barang->persediaan;
+                    if ($persediaan) {
+                        $revertDelta = $oldDetail->stok_fisik - $oldDetail->stok_sistem;
+                        if ($revertDelta > 0) {
+                            $persediaan->decrement('stock', $revertDelta);
+                        } elseif ($revertDelta < 0) {
+                            $persediaan->increment('stock', abs($revertDelta));
+                        }
+                    }
+                }
+            }
+
+            // delete old details
+            $penyesuaianPersediaan->details()->delete();
+
+            // update header
+            $penyesuaianPersediaan->update([
+                'tanggal_penyesuaian' => $request->tanggal_penyesuaian,
+                'keterangan' => $request->keterangan,
+            ]);
+
+            // create new details
+            foreach ($processedBarangIds as $barangId => $data) {
                 PenyesuaianPersediaanDetail::create([
                     'penyesuaian_persediaan_id' => $penyesuaianPersediaan->id,
                     'barang_id' => $barangId,
-                    'stok_sistem' => $stokSistem,
-                    'stok_fisik' => $stokReal,
-                    'selisih' => $selisih,
-                ]);
-
-                $persediaan->update([
-                    'stock' => $stokReal
+                    'stok_sistem' => $data['stok_sistem'],
+                    'stok_fisik' => $data['stok_fisik'],
+                    'selisih' => $data['selisih'],
                 ]);
             }
 
             DB::commit();
+
+            // Check notifications for affected barangs
+            \App\Models\Persediaan::checkAllStockNotifications();
 
             return redirect()
                 ->route('penyesuaian_persediaan.index')
@@ -211,20 +249,26 @@ class PenyesuaianPersediaanController extends Controller
         try {
             $penyesuaianPersediaan = PenyesuaianPersediaan::findOrFail($id);
 
-            // Revert stock changes
+            // Revert stock changes by applying the inverse delta
             foreach ($penyesuaianPersediaan->details as $detail) {
                 $persediaan = $detail->barang->persediaan;
 
                 if ($persediaan) {
-                    $persediaan->update([
-                        'stock' => $detail->stok_sistem
-                    ]);
+                    $revertDelta = $detail->stok_fisik - $detail->stok_sistem;
+                    if ($revertDelta > 0) {
+                        $persediaan->decrement('stock', $revertDelta);
+                    } elseif ($revertDelta < 0) {
+                        $persediaan->increment('stock', abs($revertDelta));
+                    }
                 }
             }
 
             $penyesuaianPersediaan->delete();
 
             DB::commit();
+
+            // Check notifications
+            \App\Models\Persediaan::checkAllStockNotifications();
 
             return redirect()->route('penyesuaian_persediaan.index')
                            ->with('success', 'Penyesuaian persediaan berhasil dihapus');

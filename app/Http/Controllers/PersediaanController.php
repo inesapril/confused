@@ -107,6 +107,7 @@ class PersediaanController extends Controller
                 ->merge($this->getResellerRiwayat($barangId))
                 ->merge($this->getPesananRiwayat($barangId))
                 ->merge($this->getReturnRiwayat($barangId))
+                ->merge($this->getStockOpnameRiwayat($barangId))
                 ->sortByDesc('tanggal')
                 ->values();
 
@@ -131,6 +132,33 @@ class PersediaanController extends Controller
                 'persediaan',
                 'riwayat'
             ));
+        }
+
+        private function getStockOpnameRiwayat($barangId)
+        {
+            $opname = \App\Models\PenyesuaianPersediaanDetail::with('penyesuaianPersediaan')
+                ->where('barang_id', $barangId)
+                ->get();
+
+            $data = collect();
+            foreach ($opname as $item) {
+                if ($item->penyesuaianPersediaan) {
+                    $isRevised = false;
+                    $createdAt = $item->penyesuaianPersediaan->created_at;
+                    $updatedAt = $item->penyesuaianPersediaan->updated_at;
+                    if ($createdAt && $updatedAt && abs($updatedAt->diffInSeconds($createdAt)) > 2) {
+                        $isRevised = true;
+                    }
+
+                    $data->push([
+                        'tanggal' => $item->penyesuaianPersediaan->tanggal_penyesuaian,
+                        'jenis'   => 'Stock Opname',
+                        'qty'     => $item->selisih,
+                        'is_revised' => $isRevised,
+                    ]);
+                }
+            }
+            return $data;
         }
 
         private function getSupplierRiwayat($barangId)

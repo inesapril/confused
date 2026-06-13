@@ -133,6 +133,8 @@ class BarangController extends Controller
         // atur ukuran kertas
         if ($template == 'thermal') {
             $pdf->setPaper([0, 0, 164, 85], 'portrait');
+        } elseif ($template == 'a6_24' || $template == 'a6_12' || $template == 'single') {
+            $pdf->setPaper('a6', 'portrait');
         } else {
             $pdf->setPaper('a4', 'portrait');
         }

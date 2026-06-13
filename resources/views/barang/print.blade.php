@@ -212,15 +212,17 @@
     color: #000000;
     transition: all 0.3s ease;
     transform-origin: top center;
+    font-size: 0 !important; /* Eliminate whitespace gap between inline-block items */
+    line-height: 0 !important;
 }
 
-/* a6 Sheet Mock (210mm x 297mm with 10mm margins) */
+/* A6 Sheet Mock (105mm x 148mm with 3mm margins) */
 .pdf-preview-sheet.a6-page {
-    width: 210mm;
-    min-height: 297mm;
-    padding: 10mm;
+    width: 105mm;
+    min-height: 148mm;
+    padding: 3mm;
     margin: 0 auto;
-    zoom: 0.45; /* Compact Zoom perfectly fitting aligned cards without scrolling */
+    zoom: 0.95; /* Optimal Zoom to fit nicely in preview area */
 }
 
 /* Thermal Sheet Mock (58mm width) */
@@ -235,43 +237,58 @@
     zoom: 1.6; /* Enlarged thermal sticker preview */
 }
 
-/* Exact label box styles copied from download.blade.php */
+/* Grid table for preview (mirrors DomPDF table layout) */
+.pdf-preview-sheet .grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.pdf-preview-sheet .grid-table td {
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    text-align: center;
+}
+
+/* Exact label box styles */
 .pdf-preview-sheet .label-box {
     display: inline-block;
     vertical-align: top;
     box-sizing: border-box;
     background: #ffffff;
-    border: 1px dashed #cbd5e1; /* Dashed line to simulate safe cutting outlines */
+    border: 1px dashed #cbd5e1;
     text-align: left;
 }
 
-/* a6_24 layout */
+/* a6_24 layout (3 col x 8 row) on A6 */
+.pdf-preview-sheet.layout-a6_24 .grid-table td {
+    height: 17mm;
+    padding: 0.3mm;
+}
 .pdf-preview-sheet.layout-a6_24 .label-box {
-    width: 61mm;
-    height: 30mm;
-    margin-right: 1mm;
-    margin-bottom: 3mm;
-}
-.pdf-preview-sheet.layout-a6_24 .label-box:nth-child(3n) {
-    margin-right: 0;
+    width: 31mm;
+    height: 16mm;
 }
 
-/* a6_12 layout */
+/* a6_12 layout (2 col x 6 row) on A6 */
+.pdf-preview-sheet.layout-a6_12 .grid-table td {
+    height: 23mm;
+    padding: 0.4mm;
+}
 .pdf-preview-sheet.layout-a6_12 .label-box {
-    width: 90mm;
-    height: 43mm;
-    margin-right: 2mm;
-    margin-bottom: 1mm;
-}
-.pdf-preview-sheet.layout-a6_12 .label-box:nth-child(2n) {
-    margin-right: 0;
+    width: 47mm;
+    height: 22mm;
 }
 
-/* single layout */
+/* single layout (1 col x 3 row) on A6 */
+.pdf-preview-sheet.layout-single .grid-table td {
+    height: 47mm;
+    padding: 0.5mm;
+}
 .pdf-preview-sheet.layout-single .label-box {
-    width: 180mm;
+    width: 95mm;
     height: 45mm;
-    margin-bottom: 2mm;
 }
 
 /* thermal layout */
@@ -287,12 +304,7 @@
     height: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    padding: 2.8mm;
     box-sizing: border-box;
-}
-
-.pdf-preview-sheet.layout-thermal .label-container {
-    padding: 1.2mm 2.8mm;
 }
 
 .pdf-preview-sheet .label-container td {
@@ -301,33 +313,147 @@
     vertical-align: middle;
 }
 
-.pdf-preview-sheet .td-qr {
+/* layout-a6_24 specific styles */
+.pdf-preview-sheet.layout-a6_24 .label-container {
+    padding: 1mm;
+}
+.pdf-preview-sheet.layout-a6_24 .td-qr {
+    width: 11mm;
+    text-align: center;
+}
+.pdf-preview-sheet.layout-a6_24 .qr-img-canvas {
+    width: 10mm;
+    height: 10mm;
+    display: block;
+    margin: 0 auto;
+}
+.pdf-preview-sheet.layout-a6_24 .td-info {
+    padding-left: 1mm;
+    padding-right: 0.5mm;
+    text-align: left;
+}
+.pdf-preview-sheet.layout-a6_24 .kode {
+    font-size: 6.5pt;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 0.5mm;
+    color: #000000;
+}
+.pdf-preview-sheet.layout-a6_24 .nama {
+    font-size: 5.5pt;
+    line-height: 1.2;
+    color: #000000;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* layout-a6_12 specific styles */
+.pdf-preview-sheet.layout-a6_12 .label-container {
+    padding: 1.5mm;
+}
+.pdf-preview-sheet.layout-a6_12 .td-qr {
+    width: 16mm;
+    text-align: center;
+}
+.pdf-preview-sheet.layout-a6_12 .qr-img-canvas {
+    width: 15mm;
+    height: 15mm;
+    display: block;
+    margin: 0 auto;
+}
+.pdf-preview-sheet.layout-a6_12 .td-info {
+    padding-left: 1.5mm;
+    padding-right: 1mm;
+    text-align: left;
+}
+.pdf-preview-sheet.layout-a6_12 .kode {
+    font-size: 10pt;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 1mm;
+    color: #000000;
+}
+.pdf-preview-sheet.layout-a6_12 .nama {
+    font-size: 8pt;
+    line-height: 1.2;
+    color: #000000;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* layout-single specific styles */
+.pdf-preview-sheet.layout-single .label-container {
+    padding: 3mm;
+}
+.pdf-preview-sheet.layout-single .td-qr {
+    width: 35mm;
+    text-align: center;
+}
+.pdf-preview-sheet.layout-single .qr-img-canvas {
+    width: 30mm;
+    height: 30mm;
+    display: block;
+    margin: 0 auto;
+}
+.pdf-preview-sheet.layout-single .td-info {
+    padding-left: 4mm;
+    padding-right: 2mm;
+    text-align: left;
+}
+.pdf-preview-sheet.layout-single .kode {
+    font-size: 16pt;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 2mm;
+    color: #000000;
+}
+.pdf-preview-sheet.layout-single .nama {
+    font-size: 12pt;
+    line-height: 1.2;
+    color: #000000;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* layout-thermal specific styles */
+.pdf-preview-sheet.layout-thermal .label-container {
+    padding: 1.2mm 2.8mm;
+}
+.pdf-preview-sheet.layout-thermal .td-qr {
     width: 20mm;
     text-align: center;
 }
-
-.pdf-preview-sheet .qr-img-canvas {
+.pdf-preview-sheet.layout-thermal .qr-img-canvas {
     width: 18mm;
     height: 18mm;
     display: block;
     margin: 0 auto;
 }
-
-.pdf-preview-sheet .td-info {
+.pdf-preview-sheet.layout-thermal .td-info {
     padding-left: 2.5mm;
     padding-right: 1mm;
     text-align: left;
 }
-
-.pdf-preview-sheet .kode {
+.pdf-preview-sheet.layout-thermal .kode {
     font-size: 14pt;
     font-weight: bold;
     line-height: 1.1;
     margin-bottom: 1.5mm;
     color: #000000;
 }
-
-.pdf-preview-sheet .nama {
+.pdf-preview-sheet.layout-thermal .nama {
     font-size: 11pt;
     line-height: 1.2;
     color: #000000;
@@ -602,12 +728,13 @@ function updateLivePreview() {
         }
     });
 
-    // Define labels per page depending on template to match exact DOMPDF output count
+    // Define labels per page and columns per row depending on template
     let labelsPerPage = 24;
-    if (paperSize === 'a6_24') labelsPerPage = 24;
-    else if (paperSize === 'a6_12') labelsPerPage = 12;
-    else if (paperSize === 'single') labelsPerPage = 5;
-    else if (paperSize === 'thermal') labelsPerPage = 1; // 1 label per slide for thermal roll cuts!
+    let cols = 3;
+    if (paperSize === 'a6_24') { labelsPerPage = 24; cols = 3; }
+    else if (paperSize === 'a6_12') { labelsPerPage = 12; cols = 2; }
+    else if (paperSize === 'single') { labelsPerPage = 3; cols = 1; }
+    else if (paperSize === 'thermal') { labelsPerPage = 1; cols = 1; }
 
     totalPages = Math.ceil(labelsList.length / labelsPerPage);
     if (currentPage > totalPages) currentPage = totalPages;
@@ -615,21 +742,22 @@ function updateLivePreview() {
 
     let html = '';
     
-    // Render each slide page containing a6/Thermal sheets
+    // Render each slide page
     for (let p = 0; p < totalPages; p++) {
         let pageClass = paperSize === 'thermal' ? 'pdf-preview-sheet thermal-page layout-thermal' : `pdf-preview-sheet a6-page layout-${paperSize}`;
         
         html += `<div class="preview-slide">`;
         html += `<div class="${pageClass}">`;
         
-        // Render labels for this specific page
+        // Labels for this page
         let startIdx = p * labelsPerPage;
         let endIdx = Math.min(startIdx + labelsPerPage, labelsList.length);
+        let pageLabels = labelsList.slice(startIdx, endIdx);
         
-        for (let i = startIdx; i < endIdx; i++) {
-            const item = labelsList[i];
-            const uniqueId = `qr_canvas_${i}`;
-            
+        if (paperSize === 'thermal') {
+            // Thermal: single label, no grid table
+            const item = pageLabels[0];
+            const uniqueId = `qr_canvas_${startIdx}`;
             html += `
                 <div class="label-box">
                     <table class="label-container">
@@ -645,6 +773,43 @@ function updateLivePreview() {
                     </table>
                 </div>
             `;
+        } else {
+            // A6 layouts: use table grid for perfect centering
+            html += `<table class="grid-table">`;
+            
+            // Split page labels into rows
+            for (let r = 0; r < pageLabels.length; r += cols) {
+                html += `<tr>`;
+                for (let c = 0; c < cols; c++) {
+                    let idx = r + c;
+                    if (idx < pageLabels.length) {
+                        const item = pageLabels[idx];
+                        const uniqueId = `qr_canvas_${startIdx + idx}`;
+                        html += `
+                            <td>
+                                <div class="label-box">
+                                    <table class="label-container">
+                                        <tr>
+                                            <td class="td-qr">
+                                                <canvas class="qr-img-canvas" id="${uniqueId}"></canvas>
+                                            </td>
+                                            <td class="td-info">
+                                                <div class="kode">${item.kode}</div>
+                                                <div class="nama">${item.nama}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        `;
+                    } else {
+                        html += `<td></td>`;
+                    }
+                }
+                html += `</tr>`;
+            }
+            
+            html += `</table>`;
         }
         
         html += `</div>`; // end pdf-preview-sheet
